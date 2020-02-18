@@ -12,3 +12,5 @@ If there are any issues with this tool, please open an issue on this repo or sen
 
 *Note: Remember you must read and accept the terms and conditions on the firewall page, and abide by all University Policies!*
 
+Dependencies: Requests - *pip install requests*
+
