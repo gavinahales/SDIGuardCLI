@@ -7,6 +7,8 @@ print("https://github.com/gavinahales/SDIGuardCLI")
 print("\n")
 
 #Check connection to firewall before proceeding.
+# TODO: Check if the user is already authenticated.
+print("Checking connection to firewall. Please wait...\n")
 try:
     onlinechk = requests.get("https://sdiguard.abertay.ac.uk:4100/")
     if onlinechk:
@@ -17,7 +19,8 @@ try:
 except Exception:
     print("ERROR: Couldn't reach the firewall. You might be offline or not connected to an Abertay SDI network.")
     sys.exit()
-    
+
+#T&C displayed on page. Maybe change this to pull the notification dynamically?    
 terms = """IMPORTANT INFORMATION : 
 Please log on to the firewall with your Abertay credentials rather than the username 'admin'
 
@@ -35,6 +38,7 @@ print("\nPlease confirm you have read the terms above. (Enter y to confirm).")
 
 confirmTerms = input()
 
+#Force user to accept T&C before moving on.
 if confirmTerms.lower() != "y":
     print("You must read and accept the terms before using this tool.")
     sys.exit()
@@ -42,6 +46,7 @@ if confirmTerms.lower() != "y":
 username=""
 password=""
 
+#Get username and password. Password won't be echoed to terminal.
 while(len(username) == 0):
     print("Enter your university username (without the @uad.ac.uk bit):")
     username = input()
@@ -49,8 +54,10 @@ while(len(password) == 0):
     print("Enter your password:")
     password = getpass.getpass()
 
+#Send POST request to the firewall.
 authreq = requests.post("https://sdiguard.abertay.ac.uk:4100/wgcgi.cgi", data={"fw_username":username, "fw_password":password, "fw_domain":"uad.ac.uk","submit":"Login", "action":"fw_logon", "fw_logon_type":"logon", "redirect":"", "lang":"en-US"})
 
+#
 success = "You have been successfully authenticated" in authreq.text
 
 if success:
