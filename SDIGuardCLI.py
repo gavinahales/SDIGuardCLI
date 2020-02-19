@@ -2,7 +2,7 @@ import requests
 import getpass
 import sys
 
-print("\n---SDIGuardCLI Beta---")
+print("\n---SDIGuardCLI v1.0---")
 print("https://github.com/gavinahales/SDIGuardCLI")
 print("\n")
 
